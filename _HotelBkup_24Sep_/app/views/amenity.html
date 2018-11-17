@@ -1,0 +1,116 @@
+<style>
+    .container
+    {
+        width:99%;
+    }
+
+    label
+    {
+        font-size:14px;
+        color:#333;
+        font-weight:100;
+    }
+    .well
+    {
+        background:#fff;
+    }
+
+    .page-header {
+        padding-bottom: 9px;
+        margin: 20px 0 9px;
+        border-bottom: 1px solid #eee;
+        font-size:16px;
+    }
+    .btn-success
+    {
+        margin-bottom:10px;
+    }
+    .btn
+    {
+        max-width:125px;
+    }
+</style>
+
+<div class="container" ng-if="IsCreateMode==true">
+
+    <div class="page-header">
+        Add  New Amenity
+    </div>
+    <div class="well">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" type="text" ng-model="amenityData.Name" />
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Description</label>
+                    <input class="form-control" type="text" ng-model="amenityData.Notes" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Value</label>
+                    <input class="form-control" type="text" ng-model="amenityData.value" />
+                </div>
+            </div>
+
+        
+
+            
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" ng-click="CancelForm()" class="btn btn-default  form-control">Cancel</button>
+                <button type="button" ng-click="AddAmenity()" class="btn btn-primary  form-control" ng-disabled="IsRequired()==false">Submit</button>
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+<div class="container" ng-if="IsCreateMode==false">
+    <div class="page-header">
+        <i class="fa fa-plus-circle"></i> Add New Amenity
+        <a ng-click="OpenCreate()" class="btn btn-success pull-right"> New Amenity</a>
+    </div>
+    
+    <div class="well">
+      
+        <br />
+        <table class="table table-bordered">
+            <thead>
+
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Notes
+                    </th>
+                    <th>Action</th>
+
+                </tr>
+                <tr ng-repeat="_obj in amenities">
+                    <td>{{_obj.Name}}</td>
+                    <td>{{_obj.value}}</td>
+                    <td>{{_obj.Notes}}</td>
+                    <td><a class="btn btn-primary" ng-click="EditAmenity(_obj)">Edit</a> <a class="btn btn-danger" ng-click="DeleteAmenity(_obj.AmenityID)">Delete</a></td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

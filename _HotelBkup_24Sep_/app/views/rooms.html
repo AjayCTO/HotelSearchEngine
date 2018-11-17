@@ -1,0 +1,222 @@
+<style>
+    .container
+    {
+        width:99%;
+    }
+
+    label
+    {
+        font-size:14px;
+        color:#333;
+        font-weight:100;
+    }
+    .well {
+        background: #fff;
+    }
+    .page-header {
+        padding-bottom: 9px;
+        margin: 20px 0 9px;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+    }
+    .btn-success {
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        max-width: 125px;
+    }
+
+    #modal2 .btn {
+        max-width: 100%;
+        width:100%;
+        margin-bottom:12px;
+    }
+</style>
+
+<div class="container" ng-if="IsCreateMode==true">
+
+    <div class="page-header">
+      Add New Room
+    </div>
+
+    <div class="well">
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Hotel List</label>
+                    <select class="form-control" ng-model="roomsData.HotelID">
+                        <option value="{{_obj.HotelId}}" ng-repeat="_obj in Hotels">{{_obj.Name}}</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" type="text" ng-model="roomsData.Name" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Type</label>
+                    <input class="form-control" type="text" ng-model="roomsData.type" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Price</label>
+                    <input class="form-control" type="text" ng-model="roomsData.price" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Num of Beds</label>
+                    <input class="form-control" type="text" ng-model="roomsData.num_beds" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Floor Number</label>
+                    <input class="form-control" type="text" ng-model="roomsData.room_floor" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Room Number</label>
+                    <input class="form-control" type="text" ng-model="roomsData.room_number" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Description</label>
+                    <input class="form-control" type="text" ng-model="roomsData.description" />
+                </div>
+            </div>
+         </div>
+
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" ng-click="AddRoom()" class="btn btn-primary  form-control" ng-disabled="IsRequired()==false">Submit</button>
+                    <button type="button" ng-click="CancelForm()" class="btn btn-default  form-control">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+  
+  
+    <br />
+</div>
+
+<div class="container" ng-if="IsCreateMode==false">
+    <div class="page-header">
+        <i class="fa fa-plus-circle"></i> Enter New Room
+        <a ng-click="OpenCreate()" class="btn btn-success pull-right">New Room</a>
+    </div>
+    <div class="well amen">
+
+      <table class="table table-bordered">
+            <thead>
+
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>Action</th>
+
+                </tr>
+                <tr ng-repeat="_obj in Rooms">
+                    <td>{{_obj.Name}}</td>
+                    <td>{{_obj.description}}</td>
+                    <td>{{_obj.roomtype}}</td>
+
+                    <td><a class="btn btn-primary" ng-click="EditRoom(_obj)">Edit</a> 
+                    <a class="btn btn-warning" ng-click="OpenModal(_obj.RoomID)">Amenities</a> 
+                        <a class="btn btn-info" ng-click="UploadModalOpen(_obj)">Images</a>
+                    <a class="btn btn-danger" ng-click="DeleteRoom(_obj.RoomID)">Delete</a>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+  
+
+</div>
+
+
+<div>
+
+</div>
+
+<div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Room Amenities</h4>
+        <p>
+
+            
+            <div ng-repeat="_obj in Amenities">
+                <a ng-click="removeAmenities(_obj.AmenityID,RoomID)" ng-if="GetCurrentRoomStatus(_obj.AmenityID,RoomID)==true" class="btn btn-danger">{{_obj.Name}} - Off </a>
+                <a ng-click="AddAmenities(_obj.AmenityID,RoomID)" ng-if="GetCurrentRoomStatus(_obj.AmenityID,RoomID)==false" class="btn btn-success">  {{_obj.Name}} - On</a>
+                
+
+            </div>
+
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button style="width:125px; max-width:125px;" data-dismiss="modal" class="btn btn-default">Cancel </button>
+        <button ng-click="assignamenty()" ng-disabled="roomsamenities.length==0" style="width:125px; max-width:125px;" class="btn btn-success"> Save</button>
+    </div>
+</div>
+
+
+<div id="modal12" class="modal modal-fixed-footer">
+    <div class="modal-header">
+        Upload images
+    </div>
+    <div class="modal-content">
+
+        <p>
+
+            <input type="file" id="fileName" multiple name="fileName" value="" />
+
+            <div ng-repeat="_obj in SelectedImageList" class="row">
+
+                <img src="{{_obj.Imagedata}}" style="width:60px;height:60px;float:left;" alt="Alternate Text" /> {{_obj.ImageName}}
+                <a class="btn-danger" ng-click="removeImage($index)">&#10005</a>
+
+
+            </div>
+
+            Saved Images
+
+            <div ng-repeat="_obj in Selectedobj.Images">
+                <img src="{{GetImageData(_obj.ImageData)}}" style="width:60px;height:60px;float:left;" alt="Alternate Text" />
+                <a class="btn-danger" ng-click="DeleteImage(_obj.ImageID)">&#10005</a>
+            </div>
+
+
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="UploadImages()">Upload</button>
+        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+</div>

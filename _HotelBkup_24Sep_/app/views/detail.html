@@ -1,0 +1,377 @@
+﻿<style>
+    .rooms {
+        background: white;
+        border-bottom: 1px solid #ccc;
+        margin-right: -15px !important;
+        margin-left: -15px !important;
+        margin-top: -20px;
+    }
+
+    .mt-10 {
+        margin-top: 10px;
+    }
+    .well {
+        background: #fff;
+    }
+
+    .form-control {
+        font-size: 12px;
+    }
+
+    #btn {
+        width: 354px;
+    }
+
+    .gtotal {
+        padding: 4px;
+        padding-bottom: 0px;
+        padding-top: 15px;
+    }
+
+    .width-100 {
+        height: 50px;
+        line-height: 34px;
+        font-size: 21px;
+        cursor: pointer;
+    }
+
+    .item img {
+        width: 100%;
+        max-height: 450px;
+    }
+
+    .amen .row {
+        margin-bottom: 0px;
+    }
+
+    .modalbtn {
+        float: none !important;
+        margin: 0 !important;
+    }
+
+    .rooms .row {
+        margin-bottom: 5px;
+    }
+
+    .rooms p {
+        text-transform: capitalize;
+    }
+
+    .thumbnailnew {
+        margin-bottom: 10px !important;
+        height: 50px !important;
+        width: 50px !important;
+        display: inline-block !important;
+    }
+
+    .SelectedRoom {
+        background: #e5dcdc;
+    }
+</style>
+
+
+<div class="animated fadeinup">
+    <div class="container">
+
+        <h4>Stay in<b> {{currentdetail.Name}} - {{currentdetail.Address}}</b></h4>
+        <br />
+
+        <div class="row" style="background:white;">
+            <div class="col-xs-8">
+
+
+                <div ng-repeat="rooms in currentdetail.Rooms" class="rooms row" ng-class="{'SelectedRoom':currentroomid==rooms.RoomID}">
+
+
+
+                    <div class="col-md-6 ">
+                        <div class="pull-left mt-10" ng-repeat="obj in rooms.Images" ng-if="rooms.Images.length>0">
+                            <a class="thumbnail thumbnailnew">
+                                <img ng-click="OpenImageModal(GetImageData(obj.ImageData))" src="{{GetImageData(obj.ImageData)}} " alt="..." />
+                            </a>
+                        </div>
+                        <div class="pull-left mt-10" ng-if="rooms.Images.length==0">
+                            <a class="thumbnail thumbnailnew">
+                                <img src="app/Images/default.png" alt="..." />
+                            </a><a class="thumbnail thumbnailnew">
+                                <img src="app/Images/default.png" alt="..." />
+                            </a><a class="thumbnail thumbnailnew">
+                                <img src="app/Images/default.png" alt="..." />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <p>
+                            {{rooms.Name}} <br />
+                            <small> <i class="fa fa-inr"></i> {{rooms.Price}}</small>
+                        </p>
+                    </div>
+
+                    <div class="col-md-3">
+
+
+
+                        <button type="button" class="btn btn-primary pull-right mt-10" ng-click="ChooseRoom(rooms)">Select</button>
+
+                    </div>
+
+
+
+
+
+
+                </div>
+                <div class="well" style="background-color:white; text-decoration-color:black; padding-left:7em; width:auto;" id="Noimageavailable" ng-if="currentdetail.Rooms.length==0">
+                    We are apolozise... No Room Available for requested Hotel...
+                </div>
+
+                <!--<div class="Well" style="background-color:ghostwhite;" ng-show="currentdetail.Rooms.length!=0">
+
+                    <div class="row" ng-repeat="_obj in SelectedRooms">
+
+                        <div class="col-xs-8">
+
+                            <h5>{{_obj.Name}}</h5>
+                        </div>
+
+                        <div class="col-xs-4">
+                            <div class="pull-right">
+                                <h6><i class="fa fa-inr"></i>{{_obj.Price}}</h6>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>-->
+            </div>
+
+
+            <div class="col-xs-4">
+
+
+                <div>
+
+
+
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+
+                            <div ng-repeat="Image in currentdetail.Images" class="item" ng-class="{'active':$index==0}">
+                                <img src="{{GetImageData(Image.ImageData)}} " alt="..." style="height:200px; width:500px;" />
+                                <div class="carousel-caption">
+
+                                </div>
+                            </div>
+                            <div class="well" style="background-color:white; padding-left:7em; width:auto;" id="Noimageavailable" ng-if="currentdetail.Images.length==0">
+                                We are apolozise... No Image Available for Requested Hotel...
+                            </div>
+
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" role="button" data-slide="prev">
+                            <span class="fa fa-chevron-circle-left glyphicon glyphicon-chevron-left"></span>
+                        </a>
+
+                        <a class="right carousel-control" role="button" data-slide="next">
+                            <span class="fa fa-chevron-circle-right glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+
+                </div>
+
+                <br />
+
+                <div id="Roomamenity" ng-if="currentdetail.Rooms.length!=0">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Room Facilties</div>
+                        <div class="panel-body">
+
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="_obj in Amenities">
+                                    <span class=""> <i class="fa fa-check greencolor" ng-if="GetCurrentRoomStatus(_obj.AmenityID,currentroomid)==true"></i> </span>
+                                    <span><i class="fa fa-remove gray" ng-if="GetCurrentRoomStatus(_obj.AmenityID,currentroomid)==false"></i> </span>{{_obj.Name}}
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<button ng-click="dayDiff()">days</button>-->
+</div>
+
+<input type="hidden" id="days" ng-change="UpdateValue()" ng-model="totalDays" name="name" value=" " />
+<div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-header" style="background: #254465">
+        <h4 style="color:white;"> Book <b>"{{CurrentSelectedRoom.Name}}"</b> room</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Check In</h4>
+                <div class="input-group">
+                    <span class="input-group-addon btn-primary"><i class="fa fa-calendar"></i></span>
+                    <input ng-click="dayDiff();GetAvailableRoomStatus()" ng-model="checkinDate" id="firstdate" class="datepicker form-control" type="text" placeholder="DD/MM/YYYY">
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Check Out</h4>
+                <div class="input-group">
+                    <span class="input-group-addon btn-primary"><i class="fa fa-calendar"></i></span>
+                    <input ng-click="dayDiff();GetAvailableRoomStatus()" ng-model="checkoutDate" id="seconddate" class="datepicker form-control" type="text" placeholder="DD/MM/YYYY">
+
+                </div>
+            </div>
+
+            
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Guest</h4>
+                <h6>
+                    <select class="form-control" id="NumGuest" ng-model="NumGuest">
+                        <option ng-repeat="n in DataArray" value="{{$index+1}}">{{$index+1}}</option>
+                    </select>
+                    
+                </h6>
+            </div>
+            <div class="col-md-6">
+                <h4>Rooms</h4>
+                <h6>
+                    <select class="form-control" id="NumRooms" ng-model="NumRooms">
+                        <option ng-repeat="n in DataArray" value="{{$index+1}}">{{$index+1}}</option>
+                    </select>
+                </h6>
+            </div>
+        </div>
+        <br />
+
+        
+
+        <div class="gtotal well">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h4>Grand Total</h4>
+                </div>
+
+                <div class="col-xs-6">
+                    <div class="pull-right">
+                        <h4><i class="fa fa-inr"></i> <span id="totalPrice">0</span></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="IsRoomAvailable==false" style="color:brown;">
+            Sorry Room not available on this date range, please try another date.
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <a ng-click="SendTobooking()" ng-class="{'disabled':SelectedRooms.length==0 || IsRoomAvailable==false}" class="modalbtn btn btn-primary">BOOK NOW</a>
+        <button class="modalbtn btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+</div>
+
+<div id="modalimage" class="modal modal-fixed-footer">
+    <div class="modal-header">
+      Room image
+    </div>
+    <div class="modal-body">
+        
+
+
+        <img src="{{SelectedImageData}}" style="height:auto;width:auto;" />
+
+        
+        
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $('.carousel').carousel({
+            interval: 3000
+        });
+
+        $("#NumGuest").change(function () {
+            $("#NumRooms").val(parseInt($(this).val()/3));
+
+        })
+
+        $('a[data-slide="prev"]').click(function () {
+            $('.carousel').carousel('prev');
+        });
+
+        $('a[data-slide="next"]').click(function () {
+            $('.carousel').carousel('next');
+        });
+
+        //$(".datepicker").mousedown(function () {
+        //    $(".datepicker").datepicker('hide');
+        //});
+
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+
+        $("#firstdate").datepicker({
+            startDate: today,
+            autoclose: true,
+        }).on('changeDate', function (selected) {
+            var minDate = new Date(selected.date.valueOf());
+            $('#seconddate').datepicker('setStartDate', minDate);
+            $(this).datepicker('hide');
+            CalcDiff();
+        });
+
+        $("#seconddate").datepicker({ autoclose: true })
+            .on('changeDate', function (selected) {
+                var minDate = new Date(selected.date.valueOf());
+                $('#firstdate').datepicker('setEndDate', minDate);
+                $(this).datepicker('hide');
+                CalcDiff();
+            });
+
+
+
+
+        setTimeout(function () {
+            $("#firstdate").val($.datepicker.formatDate("mm/dd/yy", new Date()));
+            $("#seconddate").val($.datepicker.formatDate("mm/dd/yy", new Date()));
+        }, 500);
+    });
+    function CalcDiff() {
+        var a = $('#firstdate').val()!=null?new Date($('#firstdate').val()):new Date();
+        var b = $('#seconddate').val() != null ? new Date($('#seconddate').val()) : new Date(); 
+        var timeDiff = 0
+        if (b) {
+            timeDiff = (b - a) / 1000;
+        }
+        $("#days").val(Math.floor(timeDiff / (60 * 60 * 24)));
+        $("#days").trigger("change");
+        //$('.time-here').val(Math.ceil(timeDiff / (60 * 60)))
+
+    }
+
+</script>
+
+
+

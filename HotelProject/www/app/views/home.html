@@ -1,0 +1,145 @@
+﻿   <style>
+       .well
+       {
+           background:#fff;
+       }
+   </style> 
+
+
+<div class="animated fadeinup">
+
+    <div style="background: #254465" class="well">
+        <div style="text-align:center">
+            <div class="form-group">
+                <div class="input-group">
+                   
+                    <input type="text" id="globalsearch" class="form-control " ng-model="SearchObject.GlobalSearch" ng-keyup="globalsearch()" placeholder="Enter a location. Eg. City, locality or landmark" required>
+                    <i id="cleartext"  class="fa fa-times-circle" style="color: black; position: absolute; background-color: gray;  display: inline; color: white; padding: 6px; margin-left: -29px; z-index: 11; font-size: 21px;"></i>
+                    <a class="input-group-addon btn-primary"  ng-click="globalsearch()">Search</a>
+                    <a class="input-group-addon btn-primary" ng-click="ResetObj()">Refresh</a>
+                    
+                </div>
+               
+            </div>
+        </div>
+    </div>
+                                
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h3> Search By...</h3>
+                <div class="well">
+                    <h4>Hotel Name</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="SearchObject.Name" placeholder="Type Hotel Name" required>
+                        <span class="input-group-addon btn-primary" ng-click="FillHotels()"><i class="fa fa-search"></i></span>
+                    </div>
+                    <br />
+                    <h4>City</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="SearchObject.Address" placeholder="Type Address" required>
+                        <span class="input-group-addon btn-primary" ng-click="FillHotels()"><i class="fa fa-search"></i></span>
+                    </div>
+                        <br />
+                    <h4>PinCode</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="SearchObject.Pincode" placeholder="Type Pincode" required>
+                        <span class="input-group-addon btn-primary" ng-click="FillHotels()"><i class="fa fa-search"></i></span>
+                    </div>
+                        <br />
+                    <h4>Website</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="SearchObject.Url" placeholder="Type Website" required>
+                        <span class="input-group-addon btn-primary" ng-click="FillHotels()"><i class="fa fa-search"></i></span>
+                    </div>
+                    <br />
+                    
+
+                    <hr />
+
+                    <a style="width:100%;" class="btn btn-default" ng-click="ResetObj()"> <i class="fa fa-refresh"></i> Reset all filters</a>
+
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h3>All Available Hotels</h3>
+                <div class="well">
+                   
+
+
+                    <div style="text-align:center;" ng-if="showloader==true">
+                          <i style="font-size:50px;" class="fa fa-spin fa-spinner"></i>
+                    </div>
+
+                    <div ng-repeat="obj in HotelList" class="row" ng-if="HotelList.length>0 && obj.Rooms.length>0">
+
+                        <div class="col-md-3">
+                            <img src="img/5.jpeg" ng-if="obj.Images.length==0" alt="Alternate Text" style="height:130px;" />
+
+                            <img src="{{GetImageData(obj.Images[0].ImageData)}}" ng-if="obj.Images.length>0" alt="Alternate Text" style="height:130px;" />
+                        </div>
+                        <div class="col-md-6">
+                            <h2>{{obj.Name}}</h2>
+
+
+
+                            <h3>{{obj.Address}} {{obj.Pincode}}</h3>
+                            <h4>{{obj.City}}</h4>
+
+                            <h3 style="font-size: 17px; color: cadetblue;"><a href="http://{{obj.websiteurl}}" target="_blank">{{obj.websiteurl}}</a></h3>
+
+                            <h3>Available</h3>
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <h2 style="color:#ff6a00; font-size:23px;"> <i class="fa fa-phone"></i> {{obj.Contact}} </h2>
+
+
+                            <hr />
+
+                            <a ng-click="GoToDetailPage(obj)" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <!--<div id="NoHotels" class="row" ng-if="HotelList.length==0">
+                        No Hotels found, please clear your filters and give another shot.
+                       
+                        <a ng-click="ResetObj()">Clear Filters</a>
+                    </div>-->
+
+                 
+
+                 
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $("#cleartext").css("display", "none");
+        $("#globalsearch").keyup(function () {
+            debugger;
+            var _val = $.trim($("#globalsearch").val());
+            if (_val != "")
+            {
+                $("#cleartext").css("display","inline");
+            }
+            else {
+                $("#cleartext").css("display", "none");
+            }
+           
+
+     });
+
+        $("#cleartext").click(function () {
+            $("#globalsearch").val("");
+            $("#cleartext").css("display", "none");
+       });
+     });
+</script>

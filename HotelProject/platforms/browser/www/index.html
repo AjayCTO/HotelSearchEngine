@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="AngularAuthApp">
+<head>
+    <title></title>
+    <meta content="IE=edge" http-equiv="x-ua-compatible">
+    <meta content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- Icons -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" media="all" rel="stylesheet" type="text/css">
+    <!-- Styles -->
+   
+    <link href="css/keyframes.css" rel="stylesheet" type="text/css">
+    <link href="css/materialize.min.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/datepicker.css" rel="stylesheet" />
+    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="content/css/toastr.css" rel="stylesheet" type="text/css">
+    <link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <style>
+        .footer {
+            background: #37454d;
+            color: #fff;
+            text-align: center;
+            padding: 36px;
+        }
+
+       
+
+            .footer h1 {
+                color: #fff;
+            }
+
+            .footer p {
+                color: #b1a4a4;
+            }
+
+        .side-nav a
+        {
+            font-size:15px;
+        }
+        
+
+    </style>
+</head>
+<body data-ng-controller="indexController">
+   
+    <div class="m-scene" id="main">
+        <!-- Main Container -->
+        <!-- Sidebars -->
+        <!-- Right Sidebar -->
+        <ul id="slide-out" class="side-nav">
+
+            <!-- Tabs -->
+            <li>
+                <ul class="tabs">
+                    <li class="tab col s3"><a class="active" href="#sidebar1">One </a></li>
+                    <li class="tab col s3"><a href="#sidebar2">Two</a></li>
+                </ul>
+            </li>
+
+        </ul>
+        <!-- Left Sidebar -->
+        <ul id="slide-out-left" class="side-nav collapsible">
+
+            <li>
+                <div class="sidenav-header primary-color">
+
+                    <div class="nav-avatar">
+                    
+                        <div style="text-align: center; padding-top: 25px; padding-bottom: 25px; background: #254465" class="avatar-body">
+                            <h3>SHIVAM ITCS</h3>
+                           
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li><a ng-if="isadmin==true" href="#/hotel" class="no-child"><i class="fa fa-h-square"></i>Manage Hotel</a></li>
+            <li><a ng-if="isadmin==true" href="#/rooms" class="no-child"><i class="fa fa-bed"></i> Manage rooms</a></li>
+            <li><a ng-if="isadmin==true" href="#/amenity" class="no-child"><i class="fa fa-group"></i> Manage amentities</a></li>
+
+            <li><a ng-if="isadmin==false" href="#/home" class="no-child"><i class="fa fa-home"></i>Home</a></li>
+            <li><a ng-if="isadmin==false" class="no-child"><i class="fa fa-users"></i>About US</a></li>
+            <li><a ng-if="isadmin==false" class="no-child"><i class="fa fa-map-marker"></i> Contact US</a></li>
+         
+        </ul>
+        <!-- End of Sidebars -->
+        <!-- Page Content -->
+        <div id="content" class="page">
+
+            <!-- Toolbar -->
+            <div style="color:#808080" id="toolbar">
+                <div class="open-left" id="open-left" data-activates="slide-out-left">
+                    <i class="ion-android-menu"></i>
+                </div>
+                <span class="title">FIND YOUR HOTEL</span>
+                <div class="open-right" id="open-right" data-activates="slide-out">
+                    <i class="ion-android-person"></i>
+                </div>
+            </div>
+        </div> <!-- End of Page Content -->
+
+    </div>
+   
+    <div data-ng-view="">
+
+     </div>
+
+    <div class="footer">
+
+        <h1>SHIVAM ITCS</h1>
+        <p>CopyRight 2016 Shivam | All rights reserved</p>
+
+    </div>
+    <!-- 3rd party libraries -->
+    <script src="scripts/jquery-1.11.0.min.js"></script>
+
+    <script src="scripts/jquery-ui.js"></script>
+
+    <!--<script src="scripts/jquery.ui.touch-punch.js"></script>
+
+    <script src="scripts/fastclick.js"></script>-->
+
+
+   
+    <script src="js/materialize.min.js"></script>
+ 
+    <script src="scripts/angular.min.js"></script>
+
+    <script src="scripts/angular-route.min.js"></script>
+    <script src="scripts/angular-local-storage.min.js"></script>
+    <script src="https://rawgit.com/dotansimha/angularjs-dropdown-multiselect/master/src/angularjs-dropdown-multiselect.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="scripts/bootstrap-datepicker.js"></script>
+
+    
+
+    <script src="scripts/loading-bar.min.js"></script>
+
+
+    <script src="scripts/jquery.animate_from_to-1.0.js"></script>
+
+    <script src="scripts/toastr.js"></script>
+
+    <!-- Load app main script -->
+    <script src="app/app.js?v=2"></script>
+
+    <!-- Load services -->
+    <script src="app/services/authService.js?v=2"></script>
+    <!-- Load controllers -->
+    <script src="app/controllers/indexController.js?v=2"></script>
+    <script src="app/controllers/hotelController.js?v=2"></script>
+    <script src="app/controllers/roomsController.js?v=2"></script>
+    <script src="app/controllers/homeController.js?v=2"></script>
+    <script src="app/controllers/amenityController.js?v=2"></script>
+    <script src="app/controllers/detailController.js?v=2"></script>
+    <script src="app/controllers/bookingController.js?v=2"></script>
+
+    <script src="js/functions.js"></script>
+
+    <script>
+    </script>
+
+
+</body>
+
+</html>

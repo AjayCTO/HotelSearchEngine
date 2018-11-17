@@ -1,0 +1,229 @@
+﻿<style>
+    .modal {
+        bottom: initial;
+        margin-top: 100px;
+    }
+
+    .well {
+        background: #fff;
+    }
+
+    .form-control {
+        font-size: 12px;
+    }
+
+    .gtotal {
+        padding: 4px;
+        padding-bottom: 0px;
+        padding-top: 15px;
+    }
+
+
+
+    .item img {
+        width: 100%;
+        max-height: 450px;
+    }
+
+    .amen .row {
+        margin-bottom: 0px;
+    }
+
+    .rooms .row {
+        margin-bottom: 5px;
+    }
+
+    .rooms p {
+        text-transform: capitalize;
+    }
+
+    .container .row {
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    .well {
+        min-height: 368px;
+    }
+</style>
+
+
+<div class="animated fadeinup">
+
+
+
+    <div class="container">
+
+        <h4>Booking Details</h4>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well">
+                    <h4>Booking Summary</h4>
+                    <hr />
+
+                    <h5>{{currentdetail.Name}} <small>{{currentdetail.Address}}</small> </h5>
+
+
+                    <div class="row">
+                        
+                            <div class="col-md-5" ng-repeat="Image in currentdetail.Images" ng-if="$index==1">
+                                <img src="{{GetImageData(Image.ImageData)}} " alt="..." style="height:200px; width:200px;" />
+                            </div>
+                      
+                        <div class="col-md-7">
+
+                            <div class="row" >
+
+                                <div class="col-md-6">
+                                    <p style="margin-bottom:0px;">Check In</p>
+                                    <small>{{CheckInDate}}</small>
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <p style="margin-bottom:0px;">Check Out</p>
+                                    <small>{{CheckOutDate}}</small>
+                                </div>
+
+                            </div>
+
+                            <div class="row" ng-repeat="_obj in SelectedRooms">
+
+                                <div class="col-xs-8">
+                                    <p style="margin-bottom:0px;">{{_obj.Name}}</p>
+                                    <h5></h5>
+                                </div>
+
+                                <div class="col-xs-4">
+
+                                    <div class="pull-right">
+                                        <p>
+                                            <i class="fa fa-inr"></i> {{_obj.Price}}
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <b>
+                                        Happy to attend {{TotalGuests}} guests in {{TotalRooms}} Rooms for {{ TotalDays}} days .
+                                    </b>
+                                </div>
+
+
+                            </div>
+
+                            <div class="">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <h4 style="margin-bottom:0px;"> <b> Grand Total </b></h4>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <h4>
+                                            <i class="fa fa-inr"></i> <b> {{TotalPrice}} </b>
+                                        </h4>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="well">
+                    <div class="col-md-7">
+                        <h4>Guest Details</h4><small>Please fill out the form to Confirm your Booking</small>
+                    </div>
+                  </hr>
+
+
+                    <form action="/" method="post" name="myForm">
+                        <div style="margin-bottom:0px;" class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input class="form-control" ng-model="Emailmodel.FirstName" type="text" name="name" value="" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input class="form-control" type="text" ng-model="Emailmodel.LastName" name="name" value="" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input class="form-control" type="email" name="input" ng-model="Emailmodel.Email" value="" />
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input class="form-control" type="email" name="name" ng-model="Emailmodel.Contact" value="" />
+                        </div>
+                        <a class="btn width-100 btn-success disabled" ng-if="CheckEmail()==false || IsRequired()==false">Confirm Booking</a>
+                        <a class="btn width-100 btn-success" id="SendEmail" ng-click="BookDetail()" ng-if="CheckEmail()==true && IsRequired()==true">Confirm Booking</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+
+
+
+<div id="modal1" class="modal animated bounceIn">
+
+    <div class="modal-header">
+        Thank you !!
+    </div>
+
+    <div class="modal-body">
+
+        <p>Thank you for using our services, your booking details has been Emailed to your account.</p>
+    </div>
+    <div class="modal-footer">
+        <a class=" modal-action modal-close waves-effect waves-green btn-flat" data-dismiss="modal">Close</a>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $('.carousel').carousel({
+            interval: 3000
+        });
+
+        $('a[data-slide="prev"]').click(function () {
+            $('.carousel').carousel('prev');
+        });
+
+        $('a[data-slide="next"]').click(function () {
+            $('.carousel').carousel('next');
+        });
+    });
+</script>

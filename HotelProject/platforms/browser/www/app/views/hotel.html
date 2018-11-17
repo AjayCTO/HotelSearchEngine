@@ -1,0 +1,230 @@
+﻿<style>
+    .container
+    {
+        width:99%;
+    }
+
+    label
+    {
+        font-size:14px;
+        color:#333;
+        font-weight:100;
+    }
+    .well {
+        background: #fff;
+    }
+
+    .page-header {
+        padding-bottom: 9px;
+        margin: 20px 0 9px;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+    }
+
+    .btn-success {
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        max-width: 125px;
+    }
+    #uploadimage {
+        font-size: 13px;
+    }
+</style>
+
+<div class="container" ng-if="IsCreateMode==true">
+
+    <div class="page-header">
+      New Hotel
+    </div>
+
+    <div class="well">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Hotel Name</label>
+                    <input class="form-control" type="text" ng-model="hotelData.Name" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Latitude</label>
+                    <input class="form-control" type="text" ng-model="hotelData.Latitude" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>longitude</label>
+                    <input class="form-control" type="text" ng-model="hotelData.longitude" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Hotel Type</label>
+                    <input class="form-control" type="text" ng-model="hotelData.HotelType" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Notes</label>
+                    <input class="form-control" type="text" ng-model="hotelData.Notes" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input class="form-control" type="text" ng-model="hotelData.Address" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>City</label>
+                    <input class="form-control" type="text" ng-model="hotelData.city" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Pincode</label>
+                    <input class="form-control" type="text" ng-model="hotelData.Pincode" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>FacebookLink</label>
+                    <input class="form-control" type="text" ng-model="hotelData.facebooklink" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>TwitterLink</label>
+                    <input class="form-control" type="text" ng-model="hotelData.twitterlink" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>InstagramLink</label>
+                    <input class="form-control" type="text" ng-model="hotelData.instagramlink" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Website</label>
+                    <input class="form-control" type="text" ng-model="hotelData.websiteurl" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Description</label>
+                    <input class="form-control" type="text" ng-model="hotelData.Description" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Contact</label>
+                    <input class="form-control" type="text" ng-model="hotelData.Contact" />
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" ng-click="Addhotel()" class="btn btn-primary  form-control" ng-disabled="IsRequired()==false">Submit</button>
+                <button type="button" ng-click="CancelForm()" class="btn btn-default  form-control">Cancel</button>
+            </div>
+        </div>
+    </div>
+  
+</div>
+
+<div class="container"  ng-if="IsCreateMode==false">
+    <div class="page-header">
+        <i class="fa fa-plus-circle"></i> Enter New Hotel
+        <a ng-click="OpenCreate()" class="btn btn-success pull-right">New Hotel</a>
+    </div>
+    <div class="well " >
+        
+        <table class="table table-bordered">
+            <thead>
+
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Address
+                    </th>
+                    <th>Action</th>
+
+                </tr>
+                <tr ng-repeat="_obj in Hotels">
+                    <td>{{_obj.Name}}</td>
+                    <td>{{_obj.Description}}</td>
+                    <td>{{_obj.Address}}</td>
+                    <td>
+                        <a id="uploadimage" class="btn btn-warning" ng-click="UploadModalOpen(_obj)">Upload Images</a>
+                        <a class="btn btn-primary" ng-click="EditHotel(_obj)">Edit</a>
+                        <a class="btn btn-danger" ng-click="DeleteHotel(_obj.HotelId)">Delete</a>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+  
+
+</div>
+
+<div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-header">
+        Upload images
+    </div>
+    <div class="modal-content">
+        
+        <p>
+
+            <input type="file" id="fileName" multiple name="fileName"  value="" />
+
+            <div ng-repeat="_obj in SelectedImageList" class="row">
+
+                <img src="{{_obj.Imagedata}}" style="width:60px;height:60px;float:left;" alt="Alternate Text" /> {{_obj.ImageName}}
+                <a class="btn-danger" ng-click="removeImage($index)">&#10005</a>
+
+
+            </div>
+
+            Saved Images
+         
+            <div ng-repeat="_obj in Selectedobj.Images">
+                    <img src="{{GetImageData(_obj.ImageData)}}" style="width:60px;height:60px;float:left;" alt="Alternate Text" />
+                <a class="btn-danger" ng-click="DeleteImage(_obj.ImageID)">&#10005</a>
+                </div>
+       
+
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="UploadImages()">Upload</button>
+        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+</div>

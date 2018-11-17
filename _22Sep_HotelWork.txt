@@ -1,0 +1,28 @@
+Hotel Work  
+
+Done
+----------------------------------
+1. instant search at hotel list - 
+2. By default date should be today's date -
+3. the hotel which doesn't contains room must not show-
+4. image deselection at the time of image upload -
+
+Done - 24 Sept
+--------------------------------
+
+8. When we press history back then it shows some error-
+10. url variable centralization - 
+11. remove error alerts and show proper error message if any - 
+12. Datepicker handling for previous and next dates-
+1. individual images for room -  
+2. number of rooms available in hotel according to type 
+9. update page design - 
+3. number of guests -  
+4. update grand total according to days and people - 
+
+
+
+------------------------------------------------------------------
+6. at detail page room must be filtered by cascaded type filteration 
+5. advance search should be collapsible in case of mobile version
+7. Room deselection 
