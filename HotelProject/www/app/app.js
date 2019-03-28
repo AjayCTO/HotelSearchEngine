@@ -49,7 +49,7 @@ app.run(['authService', function (authService) {
     authService.fillAuthData();
 }]);
 
-
+// factory for all messages 
 app.factory('log', function () {
     toastr.options = {
         closeButton: true,
